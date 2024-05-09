@@ -16,12 +16,12 @@ public class DivideYVencerasEstatico {
      * @param y Segundo número a multiplicar representado como un arreglo de dígitos.
      * @return El resultado de la multiplicación de los dos números.
      */
-    public static int multiplicarMatrices(int[] x, int[] y) {
+    public static BigInteger multiplicarMatrices(int[] x, int[] y) {
         int n = Math.max(x.length, y.length);
 
         // Caso base para números de un dígito
         if (n == 1) {
-            return x[0] * y[0];
+            return BigInteger.valueOf((long) x[0] * y[0]);
         }
 
         // Rellenar los arreglos para que tengan la misma longitud
@@ -46,7 +46,9 @@ public class DivideYVencerasEstatico {
         int[] z3 = restarNumeros(restarNumeros(z2, z1), z0);
 
         // Desplazar y sumar los resultados parciales
-        return (int) (Math.pow(10, n) * arrayToNumber(z0) + Math.pow(10, mid) * arrayToNumber(z3) + arrayToNumber(z1));
+        return BigInteger.TEN.pow(n).multiply(arrayToNumber(z0))
+                .add(BigInteger.TEN.pow(mid).multiply(arrayToNumber(z3)))
+                .add(arrayToNumber(z1));
     }
 
     /**
@@ -121,10 +123,10 @@ public class DivideYVencerasEstatico {
      * @param arr Arreglo de dígitos.
      * @return El número entero representado por el arreglo de dígitos.
      */
-    public static int arrayToNumber(int[] arr) {
-        int num = 0;
+    public static BigInteger arrayToNumber(int[] arr) {
+        BigInteger num = BigInteger.ZERO;
         for (int digit : arr) {
-            num = num * 10 + digit;
+            num = num.multiply(BigInteger.TEN).add(BigInteger.valueOf(digit));
         }
         return num;
     }
@@ -153,7 +155,7 @@ public class DivideYVencerasEstatico {
     public static void multiply(BigInteger num1, BigInteger num2) {
         int[] arreglo1 = Utils.bigIntegerToIntArray(num1);
         int[] arreglo2 = Utils.bigIntegerToIntArray(num2);
-        int resultado = multiplicarMatrices(arreglo1, arreglo2);
+        BigInteger resultado = multiplicarMatrices(arreglo1, arreglo2);
         System.out.println("Resultado (Estático): " + resultado);
     }
 
