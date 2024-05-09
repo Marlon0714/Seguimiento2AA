@@ -37,11 +37,11 @@ public class Main {
             processAlgorithm(size, "DivideYVencerasEstatico", DivideYVencerasEstatico::multiply);
 
         }
-//        // Cargar los resultados combinados
-//        List<ResultData> results = loadCombinedResults();
-//
-//        // Mostrar el gráfico con los resultados
-//        displayChart(results);
+        // Cargar los resultados combinados
+        List<ResultData> results = loadResults();
+
+        // Mostrar el gráfico con los resultados
+        displayChart(results);
 
     }
 

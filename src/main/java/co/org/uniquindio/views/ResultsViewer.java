@@ -4,6 +4,8 @@ import co.org.uniquindio.persistence.ResultData;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
@@ -12,15 +14,11 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ResultsViewer extends JFrame {
-    private int currentMatrixSize; // Tamaño actual de la matriz visualizada
-    private Map<Integer, List<ResultData>> groupedResults;
     private ChartPanel chartPanel;
 
     public ResultsViewer(List<ResultData> results) {
@@ -29,42 +27,41 @@ public class ResultsViewer extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
 
-        groupedResults = results.stream().collect(Collectors.groupingBy(ResultData::getSize));
-
-        List<Integer> sortedSizes = new ArrayList<>(groupedResults.keySet());
-        Collections.sort(sortedSizes); // Asegurar que los tamaños estén ordenados
-        currentMatrixSize = sortedSizes.isEmpty() ? -1 : sortedSizes.get(0); // Inicializar con el menor tamaño disponible
-
-        JComboBox<Integer> sizeSelector = new JComboBox<>(sortedSizes.toArray(new Integer[0]));
-        sizeSelector.addActionListener(e -> {
-            Integer selectedSize = (Integer) sizeSelector.getSelectedItem();
-            if (selectedSize != null) {
-                currentMatrixSize = selectedSize;
-                updateChart();
-            }
-        });
-
         chartPanel = new ChartPanel(null);
         add(chartPanel, BorderLayout.CENTER);
 
         JPanel controlsPanel = new JPanel();
-        controlsPanel.add(new JLabel("Seleccione el tamaño de la matriz:"));
-        controlsPanel.add(sizeSelector);
-
+        controlsPanel.add(new JLabel("Resultados del caso de prueba más grande:"));
         add(controlsPanel, BorderLayout.NORTH);
 
-        updateChart(); // Cargar el gráfico inicial
+        updateChart(results);
     }
 
-    private void updateChart() {
-        List<ResultData> resultsForSize = groupedResults.getOrDefault(currentMatrixSize, Collections.emptyList());
+    private void updateChart(List<ResultData> results) {
+        // Agrupar resultados por tamaño y obtener el tamaño más grande
+        Map<Integer, List<ResultData>> groupedResults = results.stream()
+                .collect(Collectors.groupingBy(ResultData::getSize));
+        int largestSize = groupedResults.keySet().stream().max(Integer::compare).orElse(-1);
+
+        // Obtener resultados solo para el tamaño más grande
+        List<ResultData> resultsForLargestSize = groupedResults.getOrDefault(largestSize, List.of());
+
+        // Ordenar resultados por tiempo de ejecución en orden creciente
+        Map<String, Double> resultsDataset = resultsForLargestSize.stream()
+                .collect(Collectors.groupingBy(
+                        ResultData::getAlgorithm,
+                        Collectors.averagingDouble(ResultData::getExecutionTime)
+                ));
+
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        // Asegurarse de que los resultados se procesan en orden por algoritmo
-
+        // Agregar resultados al dataset
+        resultsDataset.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue()) // Ordenar por valor
+                .forEach(entry -> dataset.addValue(entry.getValue() / 1_000_000.0, "Tiempo (Milisegundos)", entry.getKey()));
 
         JFreeChart chart = ChartFactory.createBarChart(
-                "Comparación de Tiempos de Ejecución - Tamaño " + currentMatrixSize,
+                "Comparación de Tiempos de Ejecución - Tamaño " + largestSize + " dígitos",
                 "Algoritmo",
                 "Tiempo (Milisegundos)",
                 dataset,
@@ -83,28 +80,18 @@ public class ResultsViewer extends JFrame {
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
 
         // Ajustar el ancho máximo de la barra para que no sea demasiado delgado
-        renderer.setMaximumBarWidth(0.20);  // Ajusta esto según lo delgado que quieras que sea cada barra
-
-        // Establecer el margen entre las barras dentro de cada categoría a 0 para que estén pegadas
-        renderer.setItemMargin(0.0);  // Esto eliminará el espacio entre las barras Java y Python dentro de cada algoritmo
+        renderer.setMaximumBarWidth(0.20);
 
         // Ajustar el margen entre grupos de barras para separar más los grupos
-        plot.getDomainAxis().setCategoryMargin(0.30);  // Incrementa el espacio entre grupos de categorías
+        plot.getDomainAxis().setCategoryMargin(0.30);
 
-        // Configurar colores específicos para las series
-        renderer.setSeriesPaint(plot.getDataset().getRowIndex("Java"), Color.RED);
-        renderer.setSeriesPaint(plot.getDataset().getRowIndex("Python"), Color.BLUE);
-
-        chartPanel.setChart(chart);
+        // Rotar las etiquetas de las categorías en el eje X para mejorar la visibilidad
+        CategoryAxis domainAxis = plot.getDomainAxis();
+        domainAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
     }
-
 
     private void configureChartColors(JFreeChart chart, DefaultCategoryDataset dataset) {
         CategoryItemRenderer renderer = chart.getCategoryPlot().getRenderer();
-
-        renderer.setSeriesPaint(dataset.getRowIndex("Java"), Color.RED);
-        renderer.setSeriesPaint(dataset.getRowIndex("Python"), Color.BLUE);
+        renderer.setSeriesPaint(dataset.getRowIndex("Tiempo (Milisegundos)"), Color.RED);
     }
-
-
 }
