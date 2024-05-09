@@ -108,6 +108,12 @@ public class HinduIterativo {
         return result;
     }
 
+    /**
+     * Convierte dos números grandes a arreglos de enteros, realiza la multiplicación y muestra el resultado.
+     *
+     * @param a El primer número grande.
+     * @param b El segundo número grande.
+     */
     public static void multiply(BigInteger a, BigInteger b) {
         int[] arreglo1 = Utils.bigIntegerToIntArray(a);
         int[] arreglo2 = Utils.bigIntegerToIntArray(b);

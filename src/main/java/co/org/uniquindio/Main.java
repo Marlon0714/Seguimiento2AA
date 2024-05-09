@@ -72,7 +72,7 @@ public class Main {
     private static void processAlgorithm(int size, String algorithmName, BiConsumer<BigInteger, BigInteger> algorithmExecutor) throws Exception {
         // Cargar los numeros para el tamaño actual
         BigInteger numberA = loadNumber("number_A_" + size);
-        BigInteger numberB = loadNumber("number_A_" + size);
+        BigInteger numberB = loadNumber("number_B_" + size);
 
         // Ejecutar algoritmo
         long startTime = System.nanoTime();

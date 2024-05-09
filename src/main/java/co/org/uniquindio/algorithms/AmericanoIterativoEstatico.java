@@ -33,6 +33,12 @@ public class AmericanoIterativoEstatico {
         return  resultado;
     }
 
+    /**
+     * Convierte dos números grandes a arreglos de enteros, realiza la multiplicación y muestra el resultado.
+     *
+     * @param num1 El primer número grande.
+     * @param num2 El segundo número grande.
+     */
     public static void multiply(BigInteger num1, BigInteger num2) {
         int[] arreglo1 = Utils.bigIntegerToIntArray(num1);
         int[] arreglo2 = Utils.bigIntegerToIntArray(num2);

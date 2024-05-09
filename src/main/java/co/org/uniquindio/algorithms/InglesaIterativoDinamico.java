@@ -4,10 +4,19 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * La clase InglesaIterativoDinamico implementa el algoritmo de multiplicación inglesa de forma iterativa y dinámica.
+ * Convierte los números grandes en listas de enteros y realiza la multiplicación.
+ * El resultado se devuelve como una lista de enteros.
+ *
+ * @author Marlon Stiven Espinosa Joaqui
+ * @author Juan Esteban Quintero Rodriguez
+ * @author Jesus Santiago Ramon Ramos
+ */
 public class InglesaIterativoDinamico {
 
     /**
-     * Multiplicación inglesa usando estructuras dinámicas (ArrayList)
+     * Multiplicación inglesa usando estructuras dinámicas (List)
      * @param num1 lista representando el primer número
      * @param num2 lista representando el segundo número
      * @return lista con el resultado de la multiplicación

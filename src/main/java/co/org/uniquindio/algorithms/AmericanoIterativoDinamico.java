@@ -47,6 +47,12 @@ public class AmericanoIterativoDinamico {
         return resultado;
     }
 
+    /**
+     * Convierte dos números grandes a listas de enteros, realiza la multiplicación y muestra el resultado.
+     *
+     * @param num1 El primer número grande.
+     * @param num2 El segundo número grande.
+     */
     public static void multiply(BigInteger num1, BigInteger num2) {
         List<Integer> lista1 = Utils.bigIntegerToIntegerList(num1);
         List<Integer> lista2 = Utils.bigIntegerToIntegerList(num2);

@@ -3,6 +3,15 @@ package co.org.uniquindio.algorithms;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+/**
+ * La clase InglesaRecursivoEstatico implementa el algoritmo de multiplicación inglesa de forma recursiva y estática.
+ * Convierte los números grandes en arreglos de enteros y realiza la multiplicación.
+ * El resultado se devuelve como un arreglo de enteros.
+ *
+ * @author Marlon Stiven Espinosa Joaqui
+ * @author Juan Esteban Quintero Rodriguez
+ * @author Jesus Santiago Ramon Ramos
+ */
 public class InglesaRecursivoEstatico {
 
     /**
