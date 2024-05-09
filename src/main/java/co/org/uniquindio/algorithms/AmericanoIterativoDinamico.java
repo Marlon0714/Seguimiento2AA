@@ -19,7 +19,7 @@ public class AmericanoIterativoDinamico {
      * @param arreglo2 El segundo número  representado como una lista de enteros.
      * @return Una lista que contiene la multiplicación de ambos numeros.
      */
-    public List<Integer> multiplicarListas(List<Integer> arreglo1, List<Integer> arreglo2) {
+    public static List<Integer> multiplicarListas(List<Integer> arreglo1, List<Integer> arreglo2) {
 
         List<Integer> resultado = new ArrayList<>();
 

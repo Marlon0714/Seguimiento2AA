@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 /**
  * Esta clase contiene un método para multiplicar dos listas con un enfoque Divide y venceras.
+ * @author Marlon Stiven Espinosa Joaqui
+ * @author Juan Esteban Quintero Rodriguez
+ * @author Jesus Santiago Ramon Ramos
  */
 public class DivideYVencerasEstatico {
     /**
