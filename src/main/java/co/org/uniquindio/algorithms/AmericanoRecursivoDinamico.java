@@ -1,5 +1,6 @@
 package co.org.uniquindio.algorithms;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,13 @@ public class AmericanoRecursivoDinamico {
 
         multiplicarMatrices(arregloA,arregloB,resultado,arregloA.size()-1, arregloB.size()-1);
         return resultado;
+    }
+
+    public static void multiply(BigInteger num1, BigInteger num2) {
+        List<Integer> lista1 = Utils.bigIntegerToIntegerList(num1);
+        List<Integer> lista2 = Utils.bigIntegerToIntegerList(num2);
+        List<Integer> resultado = multiplicarMatrices(lista1, lista2);
+        System.out.println("Resultado (Dinámico): " + (resultado));
     }
 
 }

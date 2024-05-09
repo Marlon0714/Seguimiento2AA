@@ -16,9 +16,8 @@ import java.util.List;
  */
 public class ResultFileHandler {
 
-    private static final String LANGUAGE = "python";
     private static final String DEFAULT_DIRECTORY = "src/main/resources/results";
-    private static final String FILE_NAME = LANGUAGE + "_results.xml";
+    private static final String FILE_NAME = "results.xml";
     private static final Path filePath = Paths.get(DEFAULT_DIRECTORY, FILE_NAME);
 
     private ResultFileHandler() {
@@ -48,7 +47,7 @@ public class ResultFileHandler {
 
     public static void saveResult(int size, String algorithm, long executionTime) throws Exception {
         List<ResultData> results = loadResults();
-        ResultData result = new ResultData(size, algorithm,LANGUAGE, executionTime);
+        ResultData result = new ResultData(size, algorithm, executionTime);
         results.add(result);
         saveResults(results);
     }
@@ -71,20 +70,6 @@ public class ResultFileHandler {
         return results.getResults();
     }
 
-    /**
-     * Cargar una lista de resultados desde un archivo XML, con un filePath específico.
-     *
-     * @param filePath El path del archivo XML
-     * @return La lista de resultados cargados
-     * @throws Exception Si ocurre un error durante el proceso de carga
-     */
-    public static List<ResultData> loadResults(String filePath) throws Exception {
-        JAXBContext context = JAXBContext.newInstance(Results.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-
-        Results results = (Results) unmarshaller.unmarshal(new File(filePath));
-        return results.getResults();
-    }
 }
 
 

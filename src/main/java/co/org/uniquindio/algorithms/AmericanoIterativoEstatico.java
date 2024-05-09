@@ -1,5 +1,8 @@
 package co.org.uniquindio.algorithms;
 
+import java.math.BigInteger;
+import java.util.Arrays;
+
 /**
  * Esta clase contiene un método para multiplicar dos matrices de forma iterativa y con el metodo americano.
  *
@@ -28,5 +31,12 @@ public class AmericanoIterativoEstatico {
             resultado[i] += residuo;
         }
         return  resultado;
+    }
+
+    public static void multiply(BigInteger num1, BigInteger num2) {
+        int[] arreglo1 = Utils.bigIntegerToIntArray(num1);
+        int[] arreglo2 = Utils.bigIntegerToIntArray(num2);
+        int[] resultado = multiplicarMatrices(arreglo1, arreglo2);
+        System.out.println("Resultado (Estático): " + (Arrays.toString(resultado)));
     }
 }

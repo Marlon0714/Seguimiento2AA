@@ -2,6 +2,7 @@ package co.org.uniquindio.algorithms;
 
 
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 /**
@@ -105,6 +106,14 @@ public class HinduIterativo {
         }
 
         return result;
+    }
+
+    public static void multiply(BigInteger a, BigInteger b) {
+        int[] arreglo1 = Utils.bigIntegerToIntArray(a);
+        int[] arreglo2 = Utils.bigIntegerToIntArray(b);
+        int[] resultado = multiply(arreglo1, arreglo2);
+        System.out.println("Resultado (Estático): " + (Arrays.toString(resultado)));
+
     }
 
 }

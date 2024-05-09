@@ -1,5 +1,6 @@
 package co.org.uniquindio.algorithms;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 /**
@@ -141,6 +142,13 @@ public class DivideYVencerasEstatico {
         }
         System.arraycopy(arr, 0, result, count, arr.length);
         return result;
+    }
+
+    public static void multiply(BigInteger num1, BigInteger num2) {
+        int[] arreglo1 = Utils.bigIntegerToIntArray(num1);
+        int[] arreglo2 = Utils.bigIntegerToIntArray(num2);
+        int resultado = multiplicarMatrices(arreglo1, arreglo2);
+        System.out.println("Resultado (Estático): " + resultado);
     }
 
 }

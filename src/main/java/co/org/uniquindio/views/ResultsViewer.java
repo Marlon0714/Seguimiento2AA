@@ -60,18 +60,8 @@ public class ResultsViewer extends JFrame {
         List<ResultData> resultsForSize = groupedResults.getOrDefault(currentMatrixSize, Collections.emptyList());
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        // Asegurarse de que los resultados se procesan en orden por algoritmo y lenguaje
-        resultsForSize.stream()
-                .collect(Collectors.groupingBy(ResultData::getAlgorithm))
-                .forEach((algorithm, resultsByAlg) -> {
-                    Map<String, Double> languageTimes = resultsByAlg.stream()
-                            .collect(Collectors.groupingBy(ResultData::getLanguage,
-                                    Collectors.averagingDouble(ResultData::getExecutionTime)));
+        // Asegurarse de que los resultados se procesan en orden por algoritmo
 
-                    // Añadir Java y Python para cada algoritmo, convertidos a milisegundos
-                    dataset.addValue(languageTimes.getOrDefault("java", 0.0) / 1_000_000.0, "Java", algorithm);
-                    dataset.addValue(languageTimes.getOrDefault("python", 0.0) / 1_000_000.0, "Python", algorithm);
-                });
 
         JFreeChart chart = ChartFactory.createBarChart(
                 "Comparación de Tiempos de Ejecución - Tamaño " + currentMatrixSize,

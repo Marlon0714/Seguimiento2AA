@@ -5,6 +5,7 @@ import co.org.uniquindio.persistence.*;
 import co.org.uniquindio.views.ResultsViewer;
 
 import javax.swing.*;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
 import java.util.function.BiConsumer;
@@ -12,12 +13,35 @@ import java.util.function.BiConsumer;
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        int[] sizes = {8, 16, 32};
 
-        // Cargar los resultados combinados
-        List<ResultData> results = loadCombinedResults();
+        // Probar cada algoritmo con cada tamaño de numero
+        for (int size : sizes) {
+            // Generar numeros
+            BigInteger numberA = numberGenerator(size);
+            BigInteger numberB = numberGenerator(size);
 
-        // Mostrar el gráfico con los resultados
-        displayChart(results);
+            // Guardar numeros
+            saveNumber(numberA, "number_A_" + size);
+            saveNumber(numberB, "number_B_" + size);
+
+            processAlgorithm(size, "AmericanoIterativoEstatico", AmericanoIterativoEstatico::multiply);
+            processAlgorithm(size, "AmericanoIterativoDinamico", AmericanoIterativoDinamico::multiply);
+            processAlgorithm(size, "AmericanoRecursivoEstatico", AmericanoRecursivoEstatico::multiply);
+            processAlgorithm(size, "AmericanoRecursivoDinamico", AmericanoRecursivoDinamico::multiply);
+            processAlgorithm(size, "InglesaIterativoEstatico", InglesaIterativoEstatico::multiply);
+            processAlgorithm(size, "InglesaIterativoDinamico", InglesaIterativoDinamico::multiply);
+            processAlgorithm(size, "InglesaRecursivoEstatico", InglesaRecursivoEstatico::multiply);
+            processAlgorithm(size, "InglesaRecursivoDinamico", InglesaRecursivoDinamico::multiply);
+            processAlgorithm(size, "HinduIterativo", HinduIterativo::multiply);
+            processAlgorithm(size, "DivideYVencerasEstatico", DivideYVencerasEstatico::multiply);
+
+        }
+//        // Cargar los resultados combinados
+//        List<ResultData> results = loadCombinedResults();
+//
+//        // Mostrar el gráfico con los resultados
+//        displayChart(results);
 
     }
 
@@ -25,28 +49,34 @@ public class Main {
         ResultFileHandler.saveResult(size, algorithm, executionTime);
     }
 
-    public static double[][] matrixGenerator(int n,int minDigits){
-        Random rand = new Random();
-        double[][] matrix = new double[n][n];
-        int maxVal = (int) Math.pow(10, minDigits) - 1;
+    /**
+     * Genera un número aleatorio de `n` dígitos como `long`
+     * @param n cantidad de dígitos
+     * @return número aleatorio como `long`
+     */
+    public static BigInteger numberGenerator(int n) {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                matrix[i][j] = 1 + rand.nextInt(maxVal);
-            }
+        // El primer dígito no puede ser cero
+        sb.append(random.nextInt(9) + 1);
+
+        // Generar el resto de los dígitos
+        for (int i = 1; i < n; i++) {
+            sb.append(random.nextInt(10));
         }
 
-        return matrix;
+        return new BigInteger(sb.toString());
     }
 
-    private static void processAlgorithm(int size, String algorithmName, BiConsumer<double[][], double[][]> algorithmExecutor) throws Exception {
-        // Cargar las matrices para el tamaño actual
-        double[][] matrixA = loadMatrix("matrix_A_" + size + "x" + size);
-        double[][] matrixB = loadMatrix("matrix_B_" + size + "x" + size);
+    private static void processAlgorithm(int size, String algorithmName, BiConsumer<BigInteger, BigInteger> algorithmExecutor) throws Exception {
+        // Cargar los numeros para el tamaño actual
+        BigInteger numberA = loadNumber("number_A_" + size);
+        BigInteger numberB = loadNumber("number_A_" + size);
 
         // Ejecutar algoritmo
         long startTime = System.nanoTime();
-        algorithmExecutor.accept(matrixA, matrixB);
+        algorithmExecutor.accept(numberA, numberB);
         long endTime = System.nanoTime();
         long executionTime = endTime - startTime;
 
@@ -55,16 +85,16 @@ public class Main {
     }
 
 
-    public static void saveMatrix(double[][] matrix, String filename) throws Exception {
-        MatrixFileHandler.saveMatrix(matrix, filename);
+    public static void saveNumber(BigInteger number, String filename) throws Exception {
+        NumberFileHandler.saveNumber(number, filename);
     }
 
-    public static double[][] loadMatrix(String filename) throws Exception {
-        return MatrixFileHandler.loadMatrix(filename);
+    public static BigInteger loadNumber(String filename) throws Exception {
+        return NumberFileHandler.loadNumber(filename);
     }
 
-    public static List<ResultData> loadCombinedResults() throws Exception {
-        return ResultsManager.getCombinedResults();
+    public static List<ResultData> loadResults() throws Exception {
+        return ResultFileHandler.loadResults();
     }
 
     public static void displayChart(List<ResultData> results) {

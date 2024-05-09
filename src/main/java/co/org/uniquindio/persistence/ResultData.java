@@ -13,9 +13,6 @@ public class ResultData {
     private String algorithm;
 
     @XmlElement(required = true)
-    private String language;
-
-    @XmlElement(required = true)
     private long executionTime;
 
     // Constructor sin argumentos para JAXB
@@ -23,10 +20,9 @@ public class ResultData {
     }
 
     // Constructor con argumentos
-    public ResultData(int size, String algorithm, String language, long executionTime) {
+    public ResultData(int size, String algorithm, long executionTime) {
         this.size = size;
         this.algorithm = algorithm;
-        this.language = language;
         this.executionTime = executionTime;
     }
 
@@ -45,14 +41,6 @@ public class ResultData {
 
     public void setAlgorithm(String algorithm) {
         this.algorithm = algorithm;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public long getExecutionTime() {

@@ -1,6 +1,7 @@
 package co.org.uniquindio.algorithms;
 
 import java.beans.PropertyEditorSupport;
+import java.math.BigInteger;
 import java.util.Arrays;
 
 /**
@@ -19,7 +20,7 @@ public class AmericanoRecursivoEstatico {
      * @param arregloB El segundo arreglo de números a multiplicar.
      * @return Un arreglo que representa el resultado de la multiplicación.
      */
-    public static int[] multiplicarMatrices(int [] arregloA, int[] arregloB  ){
+    public static int[] multiplicarMatrices(int [] arregloA, int[] arregloB){
         int [] resultado = new int[arregloA.length+arregloB.length];
         multiplicarMatrices(arregloA,arregloB,resultado,arregloA.length-1, arregloB.length-1);
         return resultado;
@@ -54,6 +55,11 @@ public class AmericanoRecursivoEstatico {
         return resultado;
     }
 
-
+    public static void multiply(BigInteger num1, BigInteger num2) {
+        int[] arreglo1 = Utils.bigIntegerToIntArray(num1);
+        int[] arreglo2 = Utils.bigIntegerToIntArray(num2);
+        int[] resultado = multiplicarMatrices(arreglo1, arreglo2);
+        System.out.println("Resultado (Estático): " + (Arrays.toString(resultado)));
+    }
 
 }
