@@ -1,6 +1,6 @@
 package co.org.uniquindio;
 
-import co.org.uniquindio.metodos.*;
+import co.org.uniquindio.algorithms.*;
 import co.org.uniquindio.persistence.*;
 import co.org.uniquindio.views.ResultsViewer;
 
