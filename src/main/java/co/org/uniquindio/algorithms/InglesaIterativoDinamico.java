@@ -55,7 +55,7 @@ public class InglesaIterativoDinamico {
         List<Integer> lista1 = Utils.bigIntegerToIntegerList(num1);
         List<Integer> lista2 = Utils.bigIntegerToIntegerList(num2);
         List<Integer> resultado = multiplicacionInglesaDinamico(lista1, lista2);
-        System.out.println("Resultado (Dinámico): " + (resultado));
+        //System.out.println("Resultado (Dinámico): " + (resultado));
     }
 
 }
