@@ -86,7 +86,9 @@ public class InglesaRecursivoEstatico {
         int[] arreglo1 = Utils.bigIntegerToIntArray(num1);
         int[] arreglo2 = Utils.bigIntegerToIntArray(num2);
         int[] resultado = multiplicacionInglesaEstatico(arreglo1, arreglo2);
-        //System.out.println("Resultado (Recursivo Estático): " + Arrays.toString(resultado));
+        /* Muestra los números en consola
+        System.out.println("Resultado (Recursivo Estático): " + Arrays.toString(resultado));
+         */
     }
 
 }

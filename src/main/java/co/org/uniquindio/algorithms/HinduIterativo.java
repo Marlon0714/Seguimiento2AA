@@ -118,7 +118,9 @@ public class HinduIterativo {
         int[] arreglo1 = Utils.bigIntegerToIntArray(a);
         int[] arreglo2 = Utils.bigIntegerToIntArray(b);
         int[] resultado = multiply(arreglo1, arreglo2);
-        //System.out.println("Resultado (Estático): " + (Arrays.toString(resultado)));
+        /* Muestra los números en consola
+        System.out.println("Resultado (Estático): " + (Arrays.toString(resultado)));
+         */
 
     }
 

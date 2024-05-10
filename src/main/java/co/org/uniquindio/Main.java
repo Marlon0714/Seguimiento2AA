@@ -13,7 +13,7 @@ import java.util.function.BiConsumer;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        int[] sizes = {8, 16, 32};
+        int[] sizes = {8, 16, 32, 64, 128, 256, 512};
 
         // Probar cada algoritmo con cada tamaño de numero
         for (int size : sizes) {
